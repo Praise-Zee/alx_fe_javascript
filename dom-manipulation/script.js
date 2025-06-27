@@ -123,6 +123,17 @@ function loadQuotes() {
   }
 }
 
+async function fetchQuotesFromServer() {
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const serverQuotes = await response.json();
+
+  return serverQuotes.map(post => ({
+    text: post.title,
+    category: post.body
+  }));
+}
+
+
 async function postQuoteToServer(quote) {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
@@ -240,34 +251,24 @@ function filterQuotes() {
   `;
 }
 
-
 async function syncQuotes() {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-    const serverQuotes = await response.json();
+    const serverQuotes = await fetchQuotesFromServer();
 
-    const transformedQuotes = serverQuotes.map(post => ({
-      text: post.title,
-      category: post.body
-    }));
-
-    // Compare with current local quotes
     const localJson = JSON.stringify(quotes);
-    const serverJson = JSON.stringify(transformedQuotes);
+    const serverJson = JSON.stringify(serverQuotes);
 
     if (localJson !== serverJson) {
-      // Conflict resolution: Server wins
-      quotes = transformedQuotes;
+      quotes = serverQuotes;
       saveQuotes();
       populateCategories();
       filterQuotes();
       notifySyncUpdate(); // UI notification
     }
-  } catch (err) {
-    console.error("Error syncing with server:", err);
+  } catch (error) {
+    console.error("Error syncing quotes:", error);
   }
 }
-
 
 // Event Listeners
 newQuoteBtn.addEventListener("click", showRandomQuote);
