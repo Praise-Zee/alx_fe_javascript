@@ -100,6 +100,8 @@ function loadQuotes() {
   const saved = localStorage.getItem("quotes");
   if (saved) {
     quotes = JSON.parse(saved);
+  }
+}
 
 
 // Populate category filter
