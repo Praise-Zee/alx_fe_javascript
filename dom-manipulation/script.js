@@ -75,6 +75,7 @@ function addQuote() {
 
   // Add to array
   quotes.push({ text, category });
+  saveQuotes(); // Save to localStorage
 
   // Update Category Select if it's a new category
   if (![...categorySelect.options].some(option => option.value.toLowerCase() === category.toLowerCase())) {
@@ -90,6 +91,16 @@ function addQuote() {
 
   alert("Quote added successfully!");
 }
+
+function saveQuotes() {
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+}
+
+function loadQuotes() {
+  const saved = localStorage.getItem("quotes");
+  if (saved) {
+    quotes = JSON.parse(saved);
+
 
 // Populate category filter
 function populateCategoryOptions() {
@@ -107,7 +118,7 @@ newQuoteBtn.addEventListener("click", showRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);
 categorySelect.addEventListener("change", showRandomQuote);
 
-
+loadQuotes();
 createAddQuoteForm(); //Add this
 // Initial population
 populateCategoryOptions();
