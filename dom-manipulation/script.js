@@ -115,6 +115,45 @@ function populateCategoryOptions() {
   });
 }
 
+function exportQuotesAsJson() {
+  const data = JSON.stringify(quotes, null, 2); // formatted for readability
+  const blob = new Blob([data], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "quotes.json";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+
+  fileReader.onload = function (e) {
+    try {
+      const importedQuotes = JSON.parse(e.target.result);
+
+      if (!Array.isArray(importedQuotes)) {
+        throw new Error("Invalid file format");
+      }
+
+      quotes.push(...importedQuotes);
+      saveQuotes();
+      populateCategoryOptions();
+      alert("Quotes imported successfully!");
+    } catch (err) {
+      alert("Error importing quotes: " + err.message);
+    }
+  };
+
+  fileReader.readAsText(event.target.files[0]);
+}
+
+
+
 // Event Listeners
 newQuoteBtn.addEventListener("click", showRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);

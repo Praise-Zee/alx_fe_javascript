@@ -23,6 +23,10 @@
       <option value="">All</option>
     </select>
   </div>
+  <div>
+    <button onclick="exportQuotesAsJson()">Export Quotes</button>
+    <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+  </div>
 
   <script src="script.js"></script>
 </body>
