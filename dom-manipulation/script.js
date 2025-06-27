@@ -218,7 +218,7 @@ function filterQuotes() {
 }
 
 
-async function syncWithServer() {
+async function fetchQuotesFromServer() {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const serverQuotes = await response.json();
@@ -256,7 +256,7 @@ createAddQuoteForm(); // Create the input form
 populateCategory(); //Populate categories for filtering
 
 // Start sync every 30 seconds
-setInterval(syncWithServer, 30000);
+setInterval(fetchQuotesFromServer, 30000); // every 30 seconds
 
 
 
