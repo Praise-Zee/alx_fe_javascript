@@ -87,6 +87,7 @@ function addQuote() {
   // Add to array
   quotes.push({ text, category });
   saveQuotes(); // Save to localStorage
+  postQuoteToServer({text, category});
 
   newQuoteText.value = "";
   newQuoteCategory.value = "";
@@ -121,6 +122,28 @@ function loadQuotes() {
     quotes = JSON.parse(saved);
   }
 }
+
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: quote.text,
+        body: quote.category,
+        userId: 1
+      })
+    });
+
+    const result = await response.json();
+    console.log("Quote posted to server:", result);
+  } catch (error) {
+    console.error("Error posting quote to server:", error);
+  }
+}
+
 
 
 // Populate category filter
