@@ -18,6 +18,35 @@ function getRandomElement(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+
+
+function createAddQuoteForm() {
+  const formContainer = document.getElementById("quoteFormContainer");
+
+  // Create input for quote text
+  const textInput = document.createElement("input");
+  textInput.type = "text";
+  textInput.placeholder = "Enter a new quote";
+  textInput.id = "newQuoteText";
+
+  // Create input for category
+  const categoryInput = document.createElement("input");
+  categoryInput.type = "text";
+  categoryInput.placeholder = "Enter quote category";
+  categoryInput.id = "newQuoteCategory";
+
+  // Create Add button
+  const addButton = document.createElement("button");
+  addButton.innerText = "Add Quote";
+  addButton.id = "addQuoteBtn";
+  addButton.addEventListener("click", addQuote);
+
+  // Append to form container
+  formContainer.appendChild(textInput);
+  formContainer.appendChild(categoryInput);
+  formContainer.appendChild(addButton);
+}
+
 // Show Random Quote
 function showRandomQuote() {
   const selectedCategory = categorySelect.value;
@@ -78,5 +107,7 @@ newQuoteBtn.addEventListener("click", showRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);
 categorySelect.addEventListener("change", showRandomQuote);
 
+
+createAddQuoteForm(); //Add this
 // Initial population
 populateCategoryOptions();
