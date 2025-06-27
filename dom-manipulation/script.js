@@ -47,6 +47,17 @@ function createAddQuoteForm() {
   formContainer.appendChild(addButton);
 }
 
+
+function notifySyncUpdate() {
+  const syncNotice = document.getElementById("syncNotice");
+  syncNotice.style.display = "block";
+
+  setTimeout(() => {
+    syncNotice.style.display = "none";
+  }, 5000);
+}
+
+
 // Show Random Quote
 function showRandomQuote() {
   const selectedCategory = categorySelect.value;
@@ -207,6 +218,34 @@ function filterQuotes() {
 }
 
 
+async function syncWithServer() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+    const serverQuotes = await response.json();
+
+    const transformedQuotes = serverQuotes.map(post => ({
+      text: post.title,
+      category: post.body
+    }));
+
+    // Compare with current local quotes
+    const localJson = JSON.stringify(quotes);
+    const serverJson = JSON.stringify(transformedQuotes);
+
+    if (localJson !== serverJson) {
+      // Conflict resolution: Server wins
+      quotes = transformedQuotes;
+      saveQuotes();
+      populateCategories();
+      filterQuotes();
+      notifySyncUpdate(); // UI notification
+    }
+  } catch (err) {
+    console.error("Error syncing with server:", err);
+  }
+}
+
+
 // Event Listeners
 newQuoteBtn.addEventListener("click", showRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);
@@ -215,3 +254,10 @@ categorySelect.addEventListener("change", showRandomQuote);
 loadQuotes(); //Load saved quotes
 createAddQuoteForm(); // Create the input form
 populateCategory(); //Populate categories for filtering
+
+// Start sync every 30 seconds
+setInterval(syncWithServer, 30000);
+
+
+
+
