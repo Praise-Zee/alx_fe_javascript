@@ -172,7 +172,7 @@ function populateCategories() {
   uniqueCategories.forEach(category => {
     const option = document.createElement("option");
     option.value = category;
-    option.text = category;
+    option.textContent = category;
     categoryFilter.appendChild(option);
   });
 
