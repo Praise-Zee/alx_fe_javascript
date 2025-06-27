@@ -26,7 +26,7 @@ function displayRandomQuote() {
     : quotes;
 
   if (filteredQuotes.length === 0) {
-    quoteDisplay.innerHTML = <em>"No quotes available in this category."</em>;
+    quoteDisplay.innerHTML = "No quotes available in this category.";
     return;
   }
 
@@ -75,6 +75,7 @@ function populateCategoryOptions() {
 
 // Event Listeners
 newQuoteBtn.addEventListener("click", displayRandomQuote);
+addQuoteBtn.addEventListener("click", addQuote);
 categorySelect.addEventListener("change", displayRandomQuote);
 
 // Initial population
