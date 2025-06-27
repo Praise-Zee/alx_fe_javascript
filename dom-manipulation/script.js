@@ -18,8 +18,8 @@ function getRandomElement(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// Display Random Quote
-function displayRandomQuote() {
+// Show Random Quote
+function showRandomQuote() {
   const selectedCategory = categorySelect.value;
   const filteredQuotes = selectedCategory
     ? quotes.filter(q => q.category.toLowerCase() === selectedCategory.toLowerCase())
@@ -74,9 +74,9 @@ function populateCategoryOptions() {
 }
 
 // Event Listeners
-newQuoteBtn.addEventListener("click", displayRandomQuote);
+newQuoteBtn.addEventListener("click", showRandomQuote);
 addQuoteBtn.addEventListener("click", addQuote);
-categorySelect.addEventListener("change", displayRandomQuote);
+categorySelect.addEventListener("change", showRandomQuote);
 
 // Initial population
 populateCategoryOptions();
