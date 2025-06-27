@@ -19,19 +19,19 @@ function getRandomElement(arr) {
 }
 
 // Display Random Quote
-function showRandomQuote() {
+function displayRandomQuote() {
   const selectedCategory = categorySelect.value;
   const filteredQuotes = selectedCategory
     ? quotes.filter(q => q.category.toLowerCase() === selectedCategory.toLowerCase())
     : quotes;
 
   if (filteredQuotes.length === 0) {
-    quoteDisplay.innerText = "No quotes available in this category.";
+    quoteDisplay.innerHTML = <em>"No quotes available in this category."</em>;
     return;
   }
 
   const randomQuote = getRandomElement(filteredQuotes);
-  quoteDisplay.innerText = `"${randomQuote.text}" — ${randomQuote.category}`;
+  quoteDisplay.innerHTML = `"${randomQuote.text}" — ${randomQuote.category}`;
 }
 
 // Add New Quote
@@ -74,9 +74,8 @@ function populateCategoryOptions() {
 }
 
 // Event Listeners
-newQuoteBtn.addEventListener("click", showRandomQuote);
-addQuoteBtn.addEventListener("click", addQuote);
-categorySelect.addEventListener("change", showRandomQuote);
+newQuoteBtn.addEventListener("click", displayRandomQuote);
+categorySelect.addEventListener("change", displayRandomQuote);
 
 // Initial population
 populateCategoryOptions();
