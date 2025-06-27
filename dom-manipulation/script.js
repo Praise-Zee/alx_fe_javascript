@@ -50,6 +50,7 @@ function createAddQuoteForm() {
 
 function notifySyncUpdate() {
   const syncNotice = document.getElementById("syncNotice");
+  syncNotice.textContent = "Quotes synced with server!";
   syncNotice.style.display = "block";
 
   setTimeout(() => {
